@@ -12,7 +12,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import ComputerIcon from '@mui/icons-material/Computer';
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import CustomButton from "../components/CustomButton";
+import Divider from "@mui/material/Divider";
 
 interface Props {
     onSideBarOpen: () => void;
@@ -87,9 +91,26 @@ const Header: React.FC<Props> = ({ onSideBarOpen }) => {
                     {/* Hides header buttons except theme toggler, and avatar*/}
                     <Box alignItems="center" sx={{ display: { xs: "none", md: "none", lg: "flex" } }}>
                         {/* Header buttons/tabs go here */}
-                        <CustomButton href="/" icon={<DashboardRoundedIcon />} text="Dashboard" />
-                        <CustomButton href="https://starscan.io/" text="Explorer" />
+                        <CustomButton href="/" icon={<DashboardRoundedIcon />} text={Constants.Layout.DASHBOARD} />
+                        <CustomButton href="https://starscan.io/" icon={<ComputerIcon />} text={Constants.Layout.EXPLORER} />
                     </Box>
+                    <Divider
+                        orientation="vertical"
+                        sx={{ height: 32, mx: 2, display: { lg: "flex", md: "none", xs: "none" } }}
+                    />
+                    <Box sx={{ display: "flex" }}>
+                        <IconButton
+                            onClick={colorMode.toggleColorMode}
+                            color={theme.palette.mode === "dark" ? "warning" : "inherit"}
+                        >
+                            {theme.palette.mode === "dark" ? (<LightModeIcon fontSize="medium" />) : (<DarkModeIcon fontSize="medium" />)}
+                        </IconButton>
+                    </Box>
+                    <Divider
+                        orientation="vertical"
+                        sx={{ height: 32, mx: 2, display: { lg: "flex", md: "none", xs: "none" } }}
+                    />
+                    {/* User Avatar section */}
                 </Toolbar>
             </AppBar>
 
