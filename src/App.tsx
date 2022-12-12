@@ -9,6 +9,10 @@ import ColorModeContext from './components/ColorModeContext';
 import { theme as CustomTheme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 const FXSwapV2FactoryABI = require("./abis/FXSwapV2Factory.json");
 
 
@@ -64,17 +68,22 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="App">
+    <HelmetProvider>
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={CustomTheme[themeMode as keyof typeof CustomTheme]}>
           <CssBaseline>
-            <Layout>
-
-            </Layout>
+            <BrowserRouter>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/Login" element={<Login />} />
+                </Routes>
+              </Layout>
+            </BrowserRouter>
           </CssBaseline>
         </ThemeProvider>
       </ColorModeContext.Provider>
-    </div>
+    </HelmetProvider>
   );
 }
 

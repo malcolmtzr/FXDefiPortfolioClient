@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -17,6 +16,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import CustomButton from "../components/CustomButton";
 import Divider from "@mui/material/Divider";
+import UserAvatar from "../components/UserAvatar";
 
 interface Props {
     onSideBarOpen: () => void;
@@ -25,12 +25,13 @@ interface Props {
 
 const Header: React.FC<Props> = ({ onSideBarOpen }) => {
     const theme = useTheme();
-    const anchorRef = useRef(null);
     const colorMode = useContext(ColorModeContext);
     const [avatarOpen, setAvatarOpen] = useState(false);
+    const isLoggedIn: boolean = true;
 
     const handleAvatarOpen = () => {
         setAvatarOpen(true);
+        console.log("open");
     }
 
     const handleAvatarClose = () => {
@@ -110,10 +111,11 @@ const Header: React.FC<Props> = ({ onSideBarOpen }) => {
                         orientation="vertical"
                         sx={{ height: 32, mx: 2, display: { lg: "flex", md: "none", xs: "none" } }}
                     />
-                    {/* User Avatar section */}
+                    <Box sx={{ display: { lg: "flex", md: "none", xs: "none" } }}>
+                        <UserAvatar />
+                    </Box>
                 </Toolbar>
             </AppBar>
-
         </React.Fragment>
     )
 }

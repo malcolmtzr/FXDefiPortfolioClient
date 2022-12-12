@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState } from 'react'
+import React, { FC, ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
@@ -15,14 +15,16 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children }) => {
     const theme = useTheme();
+    console.log(children)
     //Checks width of screen - for responsiveness.
     //True if max width for device 
-    const isLg = useMediaQuery(theme.breakpoints.up("lg"), { defaultMatches: true});
-    
+    const isLg = useMediaQuery(theme.breakpoints.up("lg"), { defaultMatches: true });
+
     const [openSidebar, setOpenSidebar] = useState(false);
-    
+
     const handleSidebarOpen = () => {
         setOpenSidebar(true);
+        //currently nothing to display on click
     }
 
     const handleSidebarClose = () => {
@@ -49,12 +51,18 @@ const Layout: React.FC<Props> = ({ children }) => {
         });
     }
 
-    return(
-        <div>
-            <Header onSideBarOpen={handleSidebarOpen}>
-
-            </Header>
-        </div>
+    return (
+        <Box
+            id="page-top"
+            sx={{
+                backgroundColor: theme.palette.background.default,
+                height: "100%",
+                paddingTop: "60px",
+            }}
+        >
+            <Header onSideBarOpen={handleSidebarOpen}/>
+            <Box>{children}</Box>
+        </Box>
     )
 }
 

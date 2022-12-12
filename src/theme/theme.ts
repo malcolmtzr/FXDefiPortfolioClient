@@ -9,7 +9,7 @@ export default {
         palette: {
             mode: "dark",
             background: {
-                default: "rgb(27, 28, 53)",
+                default: "rgb(21, 22, 43)",
                 paper: "rgb(35, 48, 68)"
             },
             text: {
