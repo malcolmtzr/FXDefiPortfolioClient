@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./store";
 
 interface UserInterface {
     id: string | null;
@@ -51,6 +52,9 @@ export const userSlice = createSlice({
 
 //Action creators generated for each case reducer func
 export const { setUser, removeUser } = userSlice.actions;
+
+//Selector for user reducer
+export const selectUser = (state: RootState) => state.user.user;
 
 //Reducer function for userSlice (aliased: userReducer)
 export default userSlice.reducer;
