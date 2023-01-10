@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
-interface UserInterface {
+export interface UserInterface {
     id: string | null;
     name: string | null;
     email: string | null;
@@ -24,20 +24,15 @@ const initialState: UserState = {
     },
 }
 
+//createSlice uses createAction and createReducer internally
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<UserInterface>) => {
-            state.user = {
-                id: action.payload.id,
-                name: action.payload.name,
-                email: action.payload.email,
-                notes: action.payload.notes,
-                seq: action.payload.seq
-            }
+            state.user = action.payload
         },
-        removeUser: (state, action: PayloadAction<UserInterface>) => {
+        removeUser: (state) => {
             state.user = {
                 id: null,
                 name: null,
@@ -47,6 +42,9 @@ export const userSlice = createSlice({
             }
         },
         //updateUser?
+    },
+    extraReducers: (builder) => {
+
     }
 });
 

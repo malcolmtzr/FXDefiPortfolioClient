@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
@@ -14,21 +15,34 @@ import UserIcon from "@mui/icons-material/Person";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../hooks/ReduxHooks"
+import { selectUser, removeUser } from "../redux/userSlice";
 
 interface Props {
     // onHandleAvatarOpen: () => void;
     // onHandleAvatarClose: () => void;
     // onAvatarOpen: boolean;
     isLoggedIn?: boolean;
-    user?: string;
     children?: React.ReactNode;
 }
 
-const UserAvatar: React.FC<Props> = ({ isLoggedIn, user, children }) => {
+const UserAvatar: React.FC<Props> = ({ isLoggedIn, children }) => {
+    const user = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const anchorRef = useRef(null);
     const [avatarOpen, setAvatarOpen] = useState(false);
 
+    const handleLogin = () => {
+        navigate("/Login")
+    }
+
+    const handleLogout = () => {
+        //reset state
+        navigate("/");
+    }
 
     const handleAvatarOpen = () => {
         setAvatarOpen(true);
@@ -41,17 +55,17 @@ const UserAvatar: React.FC<Props> = ({ isLoggedIn, user, children }) => {
     //Logic for rendering logged in user or no user
     const render = () => {
         //if user true... else return login/register
-        const loggedIn = true;
+        const loggedIn = false;
         if (loggedIn) {
             return (
                 <Box>
                     <Typography variant="subtitle1" color={theme.palette.text.primary} sx={{ textAlign: "center" }}>
-                        {"Malcolm"}
+                        {user.name}
                     </Typography>
                     <Divider />
                     <Box sx={{ mt: 2 }}>
                         {/* MenuItem component={Link} to="#" */}
-                        <MenuItem>
+                        <MenuItem component={Link} to="#">
                             <ListItemIcon>
                                 <UserIcon fontSize="small" />
                             </ListItemIcon>
@@ -63,7 +77,7 @@ const UserAvatar: React.FC<Props> = ({ isLoggedIn, user, children }) => {
                                 }
                             />
                         </MenuItem>
-                        <MenuItem component={Link} to="Notes">
+                        <MenuItem component={Link} to="#">
                             <ListItemIcon>
                                 <TextSnippetIcon fontSize="small" />
                             </ListItemIcon>
@@ -77,7 +91,7 @@ const UserAvatar: React.FC<Props> = ({ isLoggedIn, user, children }) => {
                         </MenuItem>
                     </Box>
                     <Box sx={{ p: 1 }}>
-                        <Button color="primary" fullWidth variant="outlined" href="/">
+                        <Button onClick={() => handleLogout()} color="primary" fullWidth variant="outlined">
                             {"Logout"}
                         </Button>
                     </Box>
@@ -86,7 +100,7 @@ const UserAvatar: React.FC<Props> = ({ isLoggedIn, user, children }) => {
         } else {
             return (
                 <Box>
-                    <Button fullWidth>
+                    <Button onClick={() => handleLogin()} fullWidth>
                         <Typography variant="subtitle2" color={theme.palette.text.primary}>
                             {"Login"}
                         </Typography>

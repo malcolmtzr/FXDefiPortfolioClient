@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import ComputerIcon from '@mui/icons-material/Computer';
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -66,7 +66,7 @@ const Header: React.FC<Props> = ({ onSideBarOpen }) => {
                             <MenuIcon fontSize="small" />
                         </Button>
                     </Box>
-                    <Link href="/" style={{ textDecoration: "none" }}>
+                    <Link to="/" style={{ textDecoration: "none" }}>
                         <Box>
                             <IconButton size="large" disabled>
                                 {/* To add on Fx Logo here */}
@@ -92,8 +92,8 @@ const Header: React.FC<Props> = ({ onSideBarOpen }) => {
                     {/* Hides header buttons except theme toggler, and avatar*/}
                     <Box alignItems="center" sx={{ display: { xs: "none", md: "none", lg: "flex" } }}>
                         {/* Header buttons/tabs go here */}
-                        <CustomButton href="/" icon={<DashboardRoundedIcon />} text={Constants.Layout.DASHBOARD} />
-                        <CustomButton href="https://starscan.io/" icon={<ComputerIcon />} text={Constants.Layout.EXPLORER} />
+                        <CustomButton link="/" external={false} icon={<DashboardRoundedIcon />} text={Constants.Layout.DASHBOARD} />
+                        <CustomButton link="https://starscan.io/" external={true} icon={<ComputerIcon />} text={Constants.Layout.EXPLORER} />
                     </Box>
                     <Divider
                         orientation="vertical"

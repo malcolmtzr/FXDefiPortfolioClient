@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Avatar from '@mui/material/Avatar';
@@ -15,16 +15,20 @@ import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
 import { Constants } from "../constants";
 import axios from "axios";
+import { useAppSelector, useAppDispatch } from "../hooks/ReduxHooks"
+import { UserInterface } from "../redux/userSlice";
+import { selectUser, setUser } from "../redux/userSlice";
 
-interface Props {}
+interface Props { }
 
-interface User {
-    email: string,
-    password: string
+interface UserLogin {
+    message: string;
+    user: UserInterface
 }
 
 const Login: React.FC<Props> = () => {
-
+    const user = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
     const theme = useTheme();
     const navigate = useNavigate();
 
@@ -34,18 +38,26 @@ const Login: React.FC<Props> = () => {
         console.log(formData.get("email"));
         console.log(formData.get("password"));
         try {
-            const res = await axios.post<User>(
+            const res = await axios.post<UserLogin>(
                 "http://localhost:4000/login",
                 {
                     email: formData.get("email"),
                     password: formData.get("password")
                 }
             );
-            console.log(res);
+            console.log(res.data);
+            const loginUser: UserInterface = {
+                id: res.data.user.id,
+                name: res.data.user.name,
+                email: res.data.user.email,
+                notes: res.data.user.notes,
+                seq: res.data.user.seq,
+            }
+            dispatch(setUser(loginUser))
             navigate("/");
-            
+
         }
-        catch(error) {
+        catch (error) {
             if (axios.isAxiosError(error)) {
                 console.log(error.message);
             }
