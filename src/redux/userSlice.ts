@@ -6,12 +6,12 @@ export interface UserInterface {
     id: string | null;
     name: string | null;
     email: string | null;
-    notes: Array<string>
-    seq: number | null
+    notes: Array<string>;
+    seq: number | null;
 }
 
 export interface UserState {
-    user: UserInterface
+    user: UserInterface;
 }
 
 const initialState: UserState = {
@@ -33,19 +33,11 @@ export const userSlice = createSlice({
             state.user = action.payload
         },
         removeUser: (state) => {
-            state.user = {
-                id: null,
-                name: null,
-                email: null,
-                notes: [],
-                seq: null,
-            }
+            return initialState;
         },
-        //updateUser?
     },
-    extraReducers: (builder) => {
-
-    }
+    // extraReducers: (builder) => {
+    // }
 });
 
 //Action creators generated for each case reducer func

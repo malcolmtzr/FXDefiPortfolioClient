@@ -41,6 +41,7 @@ const UserAvatar: React.FC<Props> = ({ isLoggedIn, children }) => {
 
     const handleLogout = () => {
         //reset state
+        dispatch(removeUser())
         navigate("/");
     }
 
@@ -55,7 +56,7 @@ const UserAvatar: React.FC<Props> = ({ isLoggedIn, children }) => {
     //Logic for rendering logged in user or no user
     const render = () => {
         //if user true... else return login/register
-        const loggedIn = false;
+        const loggedIn = true;
         if (loggedIn) {
             return (
                 <Box>

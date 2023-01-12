@@ -19,6 +19,7 @@ const CustomButton: React.FC<Props> =({ link, icon, text, external, children}) =
 
     const handleLink= (url: string) => {
       if (external) {
+        //redux state will not persist when visting external link
         window.location.replace(url)
       } else {
         navigate("/");

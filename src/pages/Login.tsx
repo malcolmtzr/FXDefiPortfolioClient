@@ -18,16 +18,23 @@ import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../hooks/ReduxHooks"
 import { UserInterface } from "../redux/userSlice";
 import { selectUser, setUser } from "../redux/userSlice";
+import { selectAuth, login } from "../redux/authSlice";
 
 interface Props { }
 
-interface UserLogin {
+export interface UserLogin {
     message: string;
     user: UserInterface
 }
 
+export interface LoginData {
+    email: string;
+    password: string;
+}
+
 const Login: React.FC<Props> = () => {
     const user = useAppSelector(selectUser);
+    const auth = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -35,23 +42,23 @@ const Login: React.FC<Props> = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData: any = new FormData(event.currentTarget);
-        console.log(formData.get("email"));
-        console.log(formData.get("password"));
+        const loginData: LoginData  = {
+            email: formData.get("email"),
+            password: formData.get("password"),
+        }
         try {
-            const res = await axios.post<UserLogin>(
-                "http://localhost:4000/login",
-                {
-                    email: formData.get("email"),
-                    password: formData.get("password")
-                }
-            );
-            console.log(res.data);
+            const res: any = await dispatch(login(loginData));
+            console.log(res);
+            // const resType: string = res.type;
+            // console.log(resType);
+            const userPayload: UserLogin = res.payload;
+            console.log(userPayload);
             const loginUser: UserInterface = {
-                id: res.data.user.id,
-                name: res.data.user.name,
-                email: res.data.user.email,
-                notes: res.data.user.notes,
-                seq: res.data.user.seq,
+                id: userPayload.user.id,
+                name: userPayload.user.name,
+                email: userPayload.user.email,
+                notes: userPayload.user.notes,
+                seq: userPayload.user.seq,
             }
             dispatch(setUser(loginUser))
             navigate("/");
